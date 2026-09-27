@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GenzAura Timepieces | Horological Mastery</title>
+    <!-- Fonts -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        obsidian: '#0B0C10',
+                        slateDark: '#1F2833',
+                        platinum: '#C5C6C7',
+                        champagne: '#D4AF37',
+                        champagneLight: '#F3E5AB',
+                        goldGlow: '#453818',
+                        sapphire: '#004B87',
+                    },
+                    fontFamily: {
+                        serif: ['Cinzel', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Scrollbar for Luxury Aesthetic */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0B0C10;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D4AF37;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #F3E5AB;
+        }
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #FFF099 0%, #D4AF37 50%, #AA7C11 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gold-border-gradient {
+            border-image: linear-gradient(to right, #D4AF37, #332700, #D4AF37) 1;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #printableCertificate, #printableCertificate * {
+                visibility: visible;
+            }
+            #printableCertificate {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body class="bg-obsidian text-platinum font-sans selection:bg-champagne selection:text-obsidian antialiased min-h-screen flex flex-col pb-16 md:pb-0">
+
+    <!-- ANNOUNCEMENT BAR -->
+    <div id="announcementBar" class="bg-gradient-to-r from-obsidian via-slateDark to-obsidian border-b border-champagne/20 text-xs py-2 px-4 text-center flex justify-between items-center z-50">
+        <button onclick="toggleView()" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-champagne/10 border border-champagne/40 text-champagne hover:bg-champagne hover:text-obsidian transition-all text-xs font-semibold">
+            <i data-lucide="repeat" class="w-3 h-3"></i>
+            <span id="viewModeBadge">Switch to Admin Studio</span>
+        </button>
+        <p id="announcementText" class="truncate max-w-xs sm:max-w-md md:max-w-none text-champagneLight font-medium tracking-wide">
+            ✨ Complimentary Worldwide Express Insured Delivery on all Tourbillon Collections
+        </p>
+        <div class="hidden sm:flex items-center gap-3 text-xs text-gray-400">
+            <select id="currencySelect" onchange="changeCurrency(this.value)" class="bg-transparent border border-gray-700 rounded px-1.5 py-0.5 text-xs text-champagne focus:outline-none cursor-pointer">
+                <option value="PKR" class="bg-obsidian text-white">PKR (Rs.)</option>
+                <option value="USD" class="bg-obsidian text-white">USD ($)</option>
+            </select>
+            <span class="text-champagne/40">|</span>
+            <span class="hover:text-champagne cursor-pointer transition">Concierge</span>
+        </div>
+    </div>
+
+    <!-- MAIN NAVBAR -->
+    <header class="sticky top-0 z-40 bg-obsidian/95 backdrop-blur-md border-b border-champagne/10 shadow-2xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+               
+                <!-- Mobile Hamburger Button -->
+                <div class="flex items-center lg:hidden">
+                    <button onclick="toggleMobileMenu()" class="p-2.5 rounded-lg border border-champagne/20 text-platinum hover:text-champagne hover:border-champagne focus:outline-none min-w-[44px] min-h-[44px] flex items-center justify-center">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+
+                <!-- Brand Logo -->
+                <div class="flex-1 lg:flex-none text-center lg:text-left cursor-pointer" onclick="switchTab('store')">
+                    <h1 class="font-serif text-xl sm:text-2xl lg:text-3xl font-extrabold tracking-widest gold-gradient-text uppercase">
+                        GenzAura
+                    </h1>
+                    <p class="text-[9px] sm:text-[10px] tracking-[0.3em] text-champagne/70 uppercase -mt-1">
+                        Geneva • Haute Horlogerie
+                    </p>
+                </div>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden lg:flex items-center space-x-8 text-sm font-medium tracking-wider uppercase">
+                    <a href="#featured" onclick="filterCategory('All')" class="text-platinum hover:text-champagne transition-colors py-2 border-b-2 border-transparent hover:border-champagne">Collection</a>
+                    <a href="#featured" onclick="filterCategory('Tourbillon')" class="text-platinum hover:text-champagne transition-colors py-2 border-b-2 border-transparent hover:border-champagne">Tourbillon</a>
+                    <a href="#featured" onclick="filterCategory('Chronograph')" class="text-platinum hover:text-champagne transition-colors py-2 border-b-2 border-transparent hover:border-champagne">Chronographs</a>
+                    <a href="#heritage" class="text-platinum hover:text-champagne transition-colors py-2 border-b-2 border-transparent hover:border-champagne">Atelier</a>
+                </nav>
+
+                <!-- Actions (Search, Wishlist, Cart) -->
+                <div class="flex items-center space-x-2 sm:space-x-4">
+                    <!-- Search Bar (Desktop) -->
+                    <div class="relative hidden sm:block w-48 lg:w-64">
+                        <input type="text" id="searchInput" onkeyup="handleSearch()" placeholder="Search timepieces..."
+                               class="w-full bg-slateDark/60 text-xs border border-champagne/20 rounded-full py-2 pl-9 pr-4 text-platinum placeholder-gray-500 focus:outline-none focus:border-champagne transition-all">
+                        <i data-lucide="search" class="w-4 h-4 absolute left-3 top-2.5 text-champagne/60"></i>
+                    </div>
+
+                    <!-- Wishlist Trigger -->
+                    <button onclick="showToast('Wishlist synchronized with private vault.')" class="p-2 text-platinum hover:text-champagne transition-colors relative min-w-[44px] min-h-[44px] flex items-center justify-center">
+                        <i data-lucide="heart" class="w-5 h-5"></i>
+                        <span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-champagne"></span>
+                    </button>
+
+                    <!-- Cart Trigger -->
+                    <button onclick="toggleCartDrawer()" class="relative p-2 text-platinum hover:text-champagne transition-colors flex items-center gap-2 border border-champagne/20 rounded-full px-3 py-1.5 bg-slateDark/40 hover:bg-slateDark/80 min-h-[44px]">
+                        <i data-lucide="shopping-bag" class="w-5 h-5 text-champagne"></i>
+                        <span id="cartBadge" class="bg-champagne text-obsidian text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MOBILE NAVIGATION SLIDE-OVER DRAWER -->
+    <div id="mobileMenu" class="fixed inset-0 z-50 transform -translate-x-full transition-transform duration-300 ease-in-out lg:hidden">
+        <div class="fixed inset-0 bg-obsidian/80 backdrop-blur-sm" onclick="toggleMobileMenu()"></div>
+        <div class="relative w-4/5 max-w-sm bg-obsidian border-r border-champagne/20 h-full p-6 flex flex-col justify-between overflow-y-auto">
+            <div>
+                <div class="flex items-center justify-between pb-6 border-b border-champagne/10">
+                    <div>
+                        <h2 class="font-serif text-lg font-bold gold-gradient-text uppercase">GenzAura</h2>
+                        <p class="text-[9px] text-champagne/60 tracking-widest">HAUTE HORLOGERIE</p>
+                    </div>
+                    <button onclick="toggleMobileMenu()" class="p-2 border border-champagne/20 rounded-lg text-platinum hover:text-champagne min-w-[44px] min-h-[44px] flex items-center justify-center">
+                        <i data-lucide="x" class="w-6 h-6"></i>
+                    </button>
+                </div>
+
+                <!-- Mobile Search -->
+                <div class="mt-6 relative">
+                    <input type="text" id="mobileSearchInput" onkeyup="handleMobileSearch()" placeholder="Search watch models..."
+                           class="w-full bg-slateDark border border-champagne/20 rounded-lg py-2.5 pl-10 pr-4 text-xs text-platinum placeholder-gray-500 focus:outline-none focus:border-champagne">
+                    <i data-lucide="search" class="w-4 h-4 absolute left-3 top-3 text-champagne/60"></i>
+                </div>
+
+                <!-- Mobile Nav Links -->
+                <nav class="mt-8 space-y-4 font-serif text-sm tracking-wider uppercase">
+                    <a href="#featured" onclick="filterCategory('All'); toggleMobileMenu()" class="block py-2.5 px-3 rounded-lg hover:bg-slateDark text-platinum hover:text-champagne transition-all flex items-center justify-between">
+                        <span>Full Collection</span>
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-champagne"></i>
+                    </a>
+                    <a href="#featured" onclick="filterCategory('Tourbillon'); toggleMobileMenu()" class="block py-2.5 px-3 rounded-lg hover:bg-slateDark text-platinum hover:text-champagne transition-all flex items-center justify-between">
+                        <span>Grand Tourbillon</span>
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-champagne"></i>
+                    </a>
+                    <a href="#featured" onclick="filterCategory('Chronograph'); toggleMobileMenu()" class="block py-2.5 px-3 rounded-lg hover:bg-slateDark text-platinum hover:text-champagne transition-all flex items-center justify-between">
+                        <span>Chronographs</span>
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-champagne"></i>
+                    </a>
+                    <a href="#featured" onclick="filterCategory('Automatic'); toggleMobileMenu()" class="block py-2.5 px-3 rounded-lg hover:bg-slateDark text-platinum hover:text-champagne transition-all flex items-center justify-between">
+                        <span>Skeleton Automatic</span>
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-champagne"></i>
+                    </a>
+                    <a href="#heritage" onclick="toggleMobileMenu()" class="block py-2.5 px-3 rounded-lg hover:bg-slateDark text-platinum hover:text-champagne transition-all flex items-center justify-between">
+                        <span>The Atelier Story</span>
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-champagne"></i>
+                    </a>
+                </nav>
+            </div>
+
+            <div class="pt-6 border-t border-champagne/10 space-y-4">
+                <div class="flex items-center justify-between text-xs">
+                    <span class="text-gray-400">Currency</span>
+                    <select id="mobileCurrencySelect" onchange="changeCurrency(this.value)" class="bg-slateDark border border-champagne/20 rounded px-2 py-1 text-champagne focus:outline-none">
+                        <option value="PKR">PKR (Rs.)</option>
+                        <option value="USD">USD ($)</option>
+                    </select>
+                </div>
+                <button onclick="toggleView(); toggleMobileMenu()" class="w-full py-3 bg-gradient-to-r from-champagne to-yellow-600 text-obsidian font-bold text-xs rounded-lg uppercase tracking-wider flex items-center justify-center gap-2">
+                    <i data-lucide="sliders" class="w-4 h-4"></i>
+                    <span id="mobileViewBtnText">Open Admin Studio</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- STOREFRONT VIEW -->
+    <main id="storefrontView" class="flex-1">
+       
+        <!-- HERO SECTION -->
+        <section class="relative min-h-[80vh] flex items-center justify-center overflow-hidden py-16 px-4">
+            <!-- Background luxury ambient glow -->
+            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-goldGlow/20 via-obsidian to-obsidian opacity-80"></div>
+           
+            <div class="relative z-10 max-w-5xl mx-auto text-center space-y-6">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-champagne/30 bg-slateDark/40 text-champagne text-xs uppercase tracking-widest backdrop-blur-md">
+                    <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                    <span>Geneva 2026 Collection</span>
+                </div>
+               
+                <h1 class="font-serif text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-tight">
+                    HOROLOGICAL MASTERY, <br/>
+                    <span class="gold-gradient-text">TIMELESS DISTINCTION</span>
+                </h1>
+               
+                <p class="max-w-2xl mx-auto text-xs sm:text-sm md:text-base text-gray-300 font-light tracking-wide leading-relaxed">
+                    Handcrafted precision engineered for those who govern their own era. Discover skeleton automatics, tourbillons, and bespoke chronographs forged in high-density titanium and 18K rose gold.
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+                    <a href="#featured" class="w-full sm:w-auto px-8 py-3.5 rounded-lg bg-gradient-to-r from-champagne via-yellow-500 to-amber-600 text-obsidian font-bold text-xs uppercase tracking-widest hover:brightness-110 shadow-lg shadow-champagne/10 transition-all flex items-center justify-center gap-2 min-h-[44px]">
+                        <span>Explore Timepieces</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                    <a href="#heritage" class="w-full sm:w-auto px-8 py-3.5 rounded-lg border border-champagne/40 bg-slateDark/30 text-platinum hover:bg-champagne/10 hover:border-champagne font-bold text-xs uppercase tracking-widest transition-all min-h-[44px] flex items-center justify-center">
+                        Atelier Craftsmanship
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- CATALOG & FILTERS SECTION -->
+        <section id="featured" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-champagne/10">
+           
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
+                <div>
+                    <p class="text-xs text-champagne uppercase font-semibold tracking-widest">Masterpiece Selection</p>
+                    <h2 class="font-serif text-2xl sm:text-3xl font-bold text-white mt-1">CURATED TIMEPIECES</h2>
+                </div>
+
+                <!-- Sort & View Controls -->
+                <div class="flex items-center gap-3 self-end md:self-auto w-full md:w-auto justify-between md:justify-end">
+                    <div class="flex items-center gap-2 bg-slateDark/60 border border-champagne/20 rounded-lg px-3 py-1.5 text-xs">
+                        <i data-lucide="arrow-up-down" class="w-3.5 h-3.5 text-champagne"></i>
+                        <span class="text-gray-400">Sort:</span>
+                        <select id="sortSelect" onchange="sortProducts(this.value)" class="bg-transparent text-platinum font-medium focus:outline-none cursor-pointer">
+                            <option value="featured" class="bg-obsidian">Featured</option>
+                            <option value="price-low" class="bg-obsidian">Price: Low to High</option>
+                            <option value="price-high" class="bg-obsidian">Price: High to Low</option>
+                            <option value="name" class="bg-obsidian">Model Name</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Touch Swipeable Horizontal Filter Pills -->
+            <div class="overflow-x-auto hide-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0 mb-8">
+                <div class="flex items-center space-x-2 min-w-max pb-2" id="filterPills">
+                    <button onclick="filterCategory('All')" class="filter-btn active px-5 py-2.5 rounded-full border border-champagne text-obsidian bg-champagne text-xs font-semibold uppercase tracking-wider transition-all min-h-[44px]">All Masterpieces</button>
+                    <button onclick="filterCategory('Tourbillon')" class="filter-btn px-5 py-2.5 rounded-full border border-champagne/20 bg-slateDark/50 text-platinum hover:border-champagne text-xs font-semibold uppercase tracking-wider transition-all min-h-[44px]">Tourbillon</button>
+                    <button onclick="filterCategory('Chronograph')" class="filter-btn px-5 py-2.5 rounded-full border border-champagne/20 bg-slateDark/50 text-platinum hover:border-champagne text-xs font-semibold uppercase tracking-wider transition-all min-h-[44px]">Chronograph</button>
+                    <button onclick="filterCategory('Automatic')" class="filter-btn px-5 py-2.5 rounded-full border border-champagne/20 bg-slateDark/50 text-platinum hover:border-champagne text-xs font-semibold uppercase tracking-wider transition-all min-h-[44px]">Skeleton Automatic</button>
+                    <button onclick="filterCategory('Diver')" class="filter-btn px-5 py-2.5 rounded-full border border-champagne/20 bg-slateDark/50 text-platinum hover:border-champagne text-xs font-semibold uppercase tracking-wider transition-all min-h-[44px]">Diver 300M</button>
+                    <button onclick="filterCategory('Dress')" class="filter-btn px-5 py-2.5 rounded-full border border-champagne/20 bg-slateDark/50 text-platinum hover:border-champagne text-xs font-semibold uppercase tracking-wider transition-all min-h-[44px]">Minimalist Dress</button>
+                </div>
+            </div>
+
+            <!-- Responsive Dynamic Products Grid -->
+            <!-- 1 Column Mobile, 2 Tablet, 3/4 Desktop -->
+            <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Dynamically Rendered via JavaScript -->
+            </div>
+           
+            <div id="noResults" class="hidden text-center py-16 space-y-4">
+                <i data-lucide="search-x" class="w-12 h-12 text-champagne/40 mx-auto"></i>
+                <h3 class="font-serif text-lg font-bold text-white">No Timepieces Match Your Search</h3>
+                <p class="text-xs text-gray-400">Try adjusting your filters or search keywords.</p>
+                <button onclick="resetFilters()" class="px-4 py-2 bg-champagne text-obsidian rounded-lg text-xs font-bold uppercase">Reset Filters</button>
+            </div>
+        </section>
+
+        <!-- ATELIER HERITAGE SECTION -->
+        <section id="heritage" class="bg-slateDark/30 border-y border-champagne/10 py-16 my-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="space-y-6">
+                        <div class="inline-flex items-center gap-2 text-champagne text-xs uppercase font-bold tracking-widest">
+                            <i data-lucide="compass" class="w-4 h-4"></i>
+                            <span>The Art of Precision</span>
+                        </div>
+                        <h2 class="font-serif text-3xl sm:text-4xl font-extrabold text-white leading-tight">
+                            ENGINEERED FOR GENERATIONS, <br/>FORGED IN GENEVA
+                        </h2>
+                        <p class="text-xs sm:text-sm text-gray-300 font-light leading-relaxed">
+                            Every GenzAura movement undergoes over 300 hours of microscopic hand-finishing by master horologists. From anti-reflective sapphire crystals to custom tourbillon cages, we bridge classical Swiss tradition with futuristic obsidian metal design.
+                        </p>
+
+                        <div class="grid grid-cols-3 gap-4 pt-4 text-center border-t border-champagne/10">
+                            <div>
+                                <h3 class="font-serif text-2xl font-bold gold-gradient-text">72 HR</h3>
+                                <p class="text-[10px] text-gray-400 uppercase tracking-wider mt-1">Power Reserve</p>
+                            </div>
+                            <div>
+                                <h3 class="font-serif text-2xl font-bold gold-gradient-text">300 M</h3>
+                                <p class="text-[10px] text-gray-400 uppercase tracking-wider mt-1">Water Tested</p>
+                            </div>
+                            <div>
+                                <h3 class="font-serif text-2xl font-bold gold-gradient-text">5 YR</h3>
+                                <p class="text-[10px] text-gray-400 uppercase tracking-wider mt-1">Vault Warranty</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="relative rounded-2xl overflow-hidden border border-champagne/30 shadow-2xl group">
+                        <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&q=80&w=1000"
+                             alt="Watchmaking Workshop"
+                             class="w-full h-80 sm:h-96 object-cover transform group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-transparent"></div>
+                        <div class="absolute bottom-6 left-6 right-6 p-4 rounded-xl bg-obsidian/80 backdrop-blur-md border border-champagne/20">
+                            <p class="font-serif text-sm font-bold text-white">GenzAura Master Horologist Atelier</p>
+                            <p class="text-[11px] text-champagne/80 mt-0.5">Hand-assembled in limited annual production runs.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- DUMMY ADMIN STUDIO VIEW (Toggled via header) -->
+    <main id="adminStudioView" class="hidden flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-6 mb-8 border-b border-champagne/20 gap-4">
+            <div>
+                <span class="px-2.5 py-1 rounded bg-champagne/20 text-champagne text-[10px] font-bold uppercase tracking-wider">Atelier Studio Mode</span>
+                <h1 class="font-serif text-2xl sm:text-3xl font-extrabold text-white mt-1">GenzAura Management Studio</h1>
+            </div>
+            <button onclick="toggleView()" class="px-4 py-2 border border-champagne/30 text-champagne hover:bg-champagne hover:text-obsidian rounded-lg text-xs font-bold uppercase tracking-wider transition-all min-h-[44px]">
+                Exit Admin Mode
+            </button>
+        </div>
+
+        <!-- Admin Stats Dashboard Metrics -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <div class="bg-slateDark/60 border border-champagne/20 p-4 rounded-xl">
+                <p class="text-[11px] text-gray-400 uppercase font-semibold">Total Revenue</p>
+                <h3 class="font-serif text-lg sm:text-2xl font-bold gold-gradient-text mt-1" id="adminTotalRevenue">Rs. 24,850,000</h3>
+                <span class="text-[10px] text-emerald-400 flex items-center gap-1 mt-1">
+                    <i data-lucide="trending-up" class="w-3 h-3"></i> +14.2% this month
+                </span>
+            </div>
+            <div class="bg-slateDark/60 border border-champagne/20 p-4 rounded-xl">
+                <p class="text-[11px] text-gray-400 uppercase font-semibold">Orders Executed</p>
+                <h3 class="font-serif text-lg sm:text-2xl font-bold text-white mt-1" id="adminTotalOrders">48 Vault Orders</h3>
+                <span class="text-[10px] text-champagne flex items-center gap-1 mt-1">
+                    <i data-lucide="clock" class="w-3 h-3"></i> 3 pending dispatch
+                </span>
+            </div>
+            <div class="bg-slateDark/60 border border-champagne/20 p-4 rounded-xl">
+                <p class="text-[11px] text-gray-400 uppercase font-semibold">Active Inventory</p>
+                <h3 class="font-serif text-lg sm:text-2xl font-bold text-white mt-1" id="adminInventoryCount">6 Models</h3>
+                <span class="text-[10px] text-gray-400 flex items-center gap-1 mt-1">
+                    <i data-lucide="check-circle" class="w-3 h-3 text-emerald-400"></i> In Sync with Store
+                </span>
+            </div>
+            <div class="bg-slateDark/60 border border-champagne/20 p-4 rounded-xl">
+                <p class="text-[11px] text-gray-400 uppercase font-semibold">Average Order Value</p>
+                <h3 class="font-serif text-lg sm:text-2xl font-bold text-white mt-1">Rs. 517,700</h3>
+                <span class="text-[10px] text-champagne flex items-center gap-1 mt-1">
+                    <i data-lucide="shield" class="w-3 h-3"></i> High-Tier Luxury
+                </span>
+            </div>
+        </div>
+
+        <!-- Mobile-responsive Collapsible Admin Tabs -->
+        <div class="flex overflow-x-auto hide-scrollbar space-x-2 border-b border-champagne/10 pb-3 mb-6">
+            <button onclick="switchAdminTab('inventory')" id="tabBtnInventory" class="admin-tab-btn active px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-champagne text-obsidian whitespace-nowrap min-h-[44px]">
+                Product Inventory
+            </button>
+            <button onclick="switchAdminTab('orders')" id="tabBtnOrders" class="admin-tab-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-slateDark/50 text-gray-300 border border-champagne/20 whitespace-nowrap min-h-[44px]">
+                Order Tracking
+            </button>
+            <button onclick="switchAdminTab('announcement')" id="tabBtnAnnouncement" class="admin-tab-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-slateDark/50 text-gray-300 border border-champagne/20 whitespace-nowrap min-h-[44px]">
+                Ticker Customizer
+            </button>
+        </div>
+
+        <!-- TAB 1: INVENTORY MANAGEMENT -->
+        <div id="adminTabInventory" class="space-y-6">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <h3 class="font-serif text-lg font-bold text-white">Watch Models Management</h3>
+                <button onclick="openAddProductModal()" class="px-4 py-2.5 bg-champagne text-obsidian font-bold text-xs rounded-lg uppercase tracking-wider flex items-center gap-2 hover:bg-champagneLight min-h-[44px]">
+                    <i data-lucide="plus" class="w-4 h-4"></i> Add New Timepiece
+                </button>
+            </div>
+
+            <div class="overflow-x-auto rounded-xl border border-champagne/20 bg-slateDark/40">
+                <table class="w-full text-left text-xs text-platinum">
+                    <thead class="bg-obsidian border-b border-champagne/20 font-serif text-champagne uppercase">
+                        <tr>
+                            <th class="p-3.5">Timepiece</th>
+                            <th class="p-3.5">Category</th>
+                            <th class="p-3.5">Price (PKR)</th>
+                            <th class="p-3.5">Stock</th>
+                            <th class="p-3.5">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminProductTable" class="divide-y divide-champagne/10">
+                        <!-- Rendered via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- TAB 2: ORDER TRACKING -->
+        <div id="adminTabOrders" class="hidden space-y-6">
+            <h3 class="font-serif text-lg font-bold text-white">Recent Vault Orders</h3>
+            <div class="overflow-x-auto rounded-xl border border-champagne/20 bg-slateDark/40">
+                <table class="w-full text-left text-xs text-platinum">
+                    <thead class="bg-obsidian border-b border-champagne/20 font-serif text-champagne uppercase">
+                        <tr>
+                            <th class="p-3.5">Order ID</th>
+                            <th class="p-3.5">Client Name</th>
+                            <th class="p-3.5">Items</th>
+                            <th class="p-3.5">Total Amount</th>
+                            <th class="p-3.5">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-champagne/10">
+                        <tr>
+                            <td class="p-3.5 font-mono text-champagne">#GZA-9821</td>
+                            <td class="p-3.5 font-semibold">Tariq Mansoor</td>
+                            <td class="p-3.5">Grand Tourbillon Rose Gold</td>
+                            <td class="p-3.5">Rs. 850,000</td>
+                            <td class="p-3.5"><span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold">Insured Shipped</span></td>
+                        </tr>
+                        <tr>
+                            <td class="p-3.5 font-mono text-champagne">#GZA-9822</td>
+                            <td class="p-3.5 font-semibold">Saim Ali</td>
+                            <td class="p-3.5">Skeleton Mechanical Sapphire</td>
+                            <td class="p-3.5">Rs. 420,000</td>
+                            <td class="p-3.5"><span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 font-bold">Processing Vault</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- TAB 3: ANNOUNCEMENT TICKER CUSTOMIZER -->
+        <div id="adminTabAnnouncement" class="hidden max-w-xl space-y-4 bg-slateDark/40 p-6 rounded-xl border border-champagne/20">
+            <h3 class="font-serif text-lg font-bold text-white">Update Top Announcement Ticker</h3>
+            <div>
+                <label class="block text-xs font-semibold text-gray-300 mb-1">Ticker Message Text</label>
+                <input type="text" id="adminTickerInput" value="✨ Complimentary Worldwide Express Insured Delivery on all Tourbillon Collections"
+                       class="w-full bg-obsidian border border-champagne/30 rounded-lg p-3 text-xs text-platinum focus:outline-none focus:border-champagne">
+            </div>
+            <button onclick="updateAnnouncementTicker()" class="px-5 py-2.5 bg-champagne text-obsidian text-xs font-bold uppercase rounded-lg">
+                Update Header Ticker
+            </button>
+        </div>
+    </main>
+
+    <!-- MOBILE BOTTOM STICKY QUICK NAVIGATION BAR -->
+    <div class="fixed bottom-0 left-0 right-0 z-40 bg-obsidian/95 backdrop-blur-md border-t border-champagne/20 py-2 px-4 md:hidden flex items-center justify-around">
+        <button onclick="switchTab('store')" class="flex flex-col items-center gap-1 text-platinum hover:text-champagne p-1 min-w-[44px]">
+            <i data-lucide="home" class="w-5 h-5 text-champagne"></i>
+            <span class="text-[10px] font-medium">Store</span>
+        </button>
+        <button onclick="filterCategory('All')" class="flex flex-col items-center gap-1 text-platinum hover:text-champagne p-1 min-w-[44px]">
+            <i data-lucide="watch" class="w-5 h-5"></i>
+            <span class="text-[10px] font-medium">Catalog</span>
+        </button>
+        <button onclick="toggleCartDrawer()" class="flex flex-col items-center gap-1 text-platinum hover:text-champagne p-1 relative min-w-[44px]">
+            <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+            <span id="mobileBottomCartBadge" class="absolute -top-1 right-2 bg-champagne text-obsidian text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center">0</span>
+            <span class="text-[10px] font-medium">Cart</span>
+        </button>
+        <button onclick="toggleView()" class="flex flex-col items-center gap-1 text-platinum hover:text-champagne p-1 min-w-[44px]">
+            <i data-lucide="sliders" class="w-5 h-5 text-champagne"></i>
+            <span class="text-[10px] font-medium">Studio</span>
+        </button>
+    </div>
+
+    <!-- SLIDE-OVER CART DRAWER -->
+    <div id="cartDrawer" class="fixed inset-0 z-50 transform translate-x-full transition-transform duration-300 ease-in-out">
+        <div class="fixed inset-0 bg-obsidian/80 backdrop-blur-sm" onclick="toggleCartDrawer()"></div>
+        <div class="relative w-full max-w-md bg-obsidian border-l border-champagne/20 h-full ml-auto p-6 flex flex-col justify-between overflow-y-auto">
+           
+            <div>
+                <div class="flex items-center justify-between pb-4 border-b border-champagne/20">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="shopping-bag" class="w-5 h-5 text-champagne"></i>
+                        <h2 class="font-serif text-lg font-bold text-white uppercase">Vault Shopping Bag</h2>
+                    </div>
+                    <button onclick="toggleCartDrawer()" class="p-2 border border-champagne/20 rounded-lg text-platinum hover:text-champagne min-w-[44px] min-h-[44px] flex items-center justify-center">
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                    </button>
+                </div>
+
+                <div id="cartItemsList" class="mt-6 space-y-4 divide-y divide-champagne/10">
+                    <!-- Rendered JS -->
+                </div>
+            </div>
+
+            <!-- Cart Footer -->
+            <div id="cartFooter" class="pt-6 border-t border-champagne/20 space-y-4">
+                <div class="space-y-2 text-xs">
+                    <div class="flex justify-between text-gray-400">
+                        <span>Subtotal</span>
+                        <span id="cartSubtotal" class="font-semibold text-white">Rs. 0</span>
+                    </div>
+                    <div class="flex justify-between text-gray-400">
+                        <span>Vault Insured Shipping</span>
+                        <span class="text-champagne font-bold">COMPLIMENTARY</span>
+                    </div>
+                    <div class="flex justify-between text-sm font-serif font-bold text-white pt-2 border-t border-champagne/10">
+                        <span>Grand Total</span>
+                        <span id="cartGrandTotal" class="gold-gradient-text text-base">Rs. 0</span>
+                    </div>
+                </div>
+
+                <button onclick="openCheckoutModal()" class="w-full py-3.5 bg-gradient-to-r from-champagne via-yellow-500 to-amber-600 text-obsidian font-bold text-xs uppercase tracking-widest rounded-lg hover:brightness-110 transition-all flex items-center justify-center gap-2 min-h-[44px]">
+                    <i data-lucide="lock" class="w-4 h-4"></i>
+                    <span>Proceed to Secure Checkout</span>
+                </button>
+
+                <button onclick="sendWhatsAppOrder()" class="w-full py-3 border border-emerald-500/40 text-emerald-400 hover:bg-emerald-500/10 font-bold text-xs uppercase tracking-wider rounded-lg flex items-center justify-center gap-2 transition-all min-h-[44px]">
+                    <i data-lucide="message-square" class="w-4 h-4"></i>
+                    <span>Order via WhatsApp Concierge</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- QUICK VIEW MODAL (Responsive Bottom-sheet / Full-screen) -->
+    <div id="quickViewModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+        <div class="fixed inset-0 bg-obsidian/90 backdrop-blur-md" onclick="closeQuickView()"></div>
+        <div class="relative bg-slateDark border border-champagne/30 rounded-2xl max-w-3xl w-full p-6 sm:p-8 z-10 max-h-[90vh] overflow-y-auto">
+            <button onclick="closeQuickView()" class="absolute top-4 right-4 p-2 rounded-lg border border-champagne/20 text-platinum hover:text-champagne min-w-[44px] min-h-[44px] flex items-center justify-center">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+
+            <div id="quickViewContent" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Dynamically populated via JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- CHECKOUT MODAL -->
+    <div id="checkoutModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+        <div class="fixed inset-0 bg-obsidian/90 backdrop-blur-md" onclick="closeCheckoutModal()"></div>
+        <div class="relative bg-slateDark border border-champagne/30 rounded-2xl max-w-xl w-full p-6 sm:p-8 z-10 max-h-[90vh] overflow-y-auto space-y-6">
+            <div class="flex items-center justify-between pb-4 border-b border-champagne/20">
+                <h3 class="font-serif text-xl font-bold text-white uppercase">Vault Client Checkout</h3>
+                <button onclick="closeCheckoutModal()" class="p-2 border border-champagne/20 rounded-lg text-platinum hover:text-champagne min-w-[44px] min-h-[44px] flex items-center justify-center">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <form id="checkoutForm" onsubmit="handleCheckoutSubmit(event)" class="space-y-4 text-xs">
+                <div>
+                    <label class="block text-gray-300 font-semibold mb-1">Full Client Name</label>
+                    <input type="text" required placeholder="e.g. Tariq Mansoor" class="w-full bg-obsidian border border-champagne/20 rounded-lg p-3 text-platinum focus:outline-none focus:border-champagne">
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-gray-300 font-semibold mb-1">Contact Phone Number</label>
+                        <input type="tel" required placeholder="+92 300 1234567" class="w-full bg-obsidian border border-champagne/20 rounded-lg p-3 text-platinum focus:outline-none focus:border-champagne">
+                    </div>
+                    <div>
+                        <label class="block text-gray-300 font-semibold mb-1">Delivery City</label>
+                        <input type="text" required placeholder="Lahore / Karachi / Islamabad" class="w-full bg-obsidian border border-champagne/20 rounded-lg p-3 text-platinum focus:outline-none focus:border-champagne">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-gray-300 font-semibold mb-1">Vault Delivery Address</label>
+                    <textarea required rows="2" placeholder="Suite, Street Address, Residence..." class="w-full bg-obsidian border border-champagne/20 rounded-lg p-3 text-platinum focus:outline-none focus:border-champagne"></textarea>
+                </div>
+                <div>
+                    <label class="block text-gray-300 font-semibold mb-1">Payment Method</label>
+                    <select class="w-full bg-obsidian border border-champagne/20 rounded-lg p-3 text-platinum focus:outline-none focus:border-champagne">
+                        <option value="cod">Cash on Delivery (Insured Hand Carrier)</option>
+                        <option value="wire">Direct Vault Bank Transfer</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="w-full py-4 bg-gradient-to-r from-champagne via-yellow-500 to-amber-600 text-obsidian font-bold text-xs uppercase tracking-widest rounded-lg hover:brightness-110 transition-all min-h-[44px]">
+                    Confirm & Complete Vault Reservation
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- PRINTABLE LUXURY CERTIFICATE / RECEIPT MODAL -->
+    <div id="certificateModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+        <div class="fixed inset-0 bg-obsidian/90 backdrop-blur-md"></div>
+        <div class="relative bg-obsidian border-2 border-champagne rounded-2xl max-w-2xl w-full p-6 sm:p-10 z-10 text-center space-y-6" id="printableCertificate">
+           
+            <div class="border-b-2 border-champagne/30 pb-6">
+                <h2 class="font-serif text-2xl sm:text-3xl font-extrabold gold-gradient-text uppercase tracking-widest">
+                    Certificate of Horological Authenticity
+                </h2>
+                <p class="text-[10px] text-champagne/80 uppercase tracking-widest mt-1">GENZAURA HAUTE HORLOGERIE • GENEVA</p>
+            </div>
+
+            <div class="space-y-4 text-xs text-gray-300 text-left">
+                <p>This certifies that the timepiece ordered under Vault Dispatch ID <strong id="certOrderId" class="text-champagne font-mono">#GZA-8812</strong> has been hand-inspected, pressure tested to specification, and assigned genuine origin documentation.</p>
+               
+                <div class="bg-slateDark/60 p-4 rounded-xl border border-champagne/20 space-y-2">
+                    <p><strong>Client:</strong> <span id="certClientName">Vault Collector</span></p>
+                    <p><strong>Timepiece Reserved:</strong> <span id="certItemName" class="text-champagne font-serif font-bold">Grand Tourbillon</span></p>
+                    <p><strong>Total Amount Paid:</strong> <span id="certTotalAmount" class="gold-gradient-text font-bold">Rs. 850,000</span></p>
+                    <p><strong>Vault Guarantee:</strong> 5-Year Geneva Mechanical International Warranty</p>
+                </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-4 pt-4 no-print">
+                <button onclick="window.print()" class="flex-1 py-3 bg-champagne text-obsidian font-bold text-xs uppercase tracking-widest rounded-lg flex items-center justify-center gap-2">
+                    <i data-lucide="printer" class="w-4 h-4"></i> Print Certificate
+                </button>
+                <button onclick="closeCertificateModal()" class="flex-1 py-3 border border-champagne/30 text-platinum hover:bg-slateDark font-bold text-xs uppercase tracking-widest rounded-lg">
+                    Close Window
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADD PRODUCT MODAL FOR ADMIN -->
+    <div id="addProductModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+        <div class="fixed inset-0 bg-obsidian/90 backdrop-blur-md" onclick="closeAddProductModal()"></div>
+        <div class="relative bg-slateDark border border-champagne/30 rounded-2xl max-w-md w-full p-6 z-10 space-y-4">
+            <h3 class="font-serif text-lg font-bold text-white uppercase">Add New Timepiece Model</h3>
+            <form id="addProductForm" onsubmit="handleAddProductSubmit(event)" class="space-y-3 text-xs">
+                <div>
+                    <label class="block text-gray-300 font-semibold mb-1">Model Name</label>
+                    <input type="text" id="newProdName" required placeholder="e.g. Royal Skeleton Carbon" class="w-full bg-obsidian border border-champagne/20 rounded p-2.5 text-platinum">
+                </div>
+                <div>
+                    <label class="block text-gray-300 font-semibold mb-1">Category</label>
+                    <select id="newProdCategory" class="w-full bg-obsidian border border-champagne/20 rounded p-2.5 text-platinum">
+                        <option value="Tourbillon">Tourbillon</option>
+                        <option value="Chronograph">Chronograph</option>
+                        <option value="Automatic">Skeleton Automatic</option>
+                        <option value="Diver">Diver 300M</option>
+                        <option value="Dress">Minimalist Dress</option>
+                    </select>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-gray-300 font-semibold mb-1">Price (PKR)</label>
+                        <input type="number" id="newProdPrice" required placeholder="350000" class="w-full bg-obsidian border border-champagne/20 rounded p-2.5 text-platinum">
+                    </div>
+                    <div>
+                        <label class="block text-gray-300 font-semibold mb-1">Stock Count</label>
+                        <input type="number" id="newProdStock" required value="3" class="w-full bg-obsidian border border-champagne/20 rounded p-2.5 text-platinum">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-gray-300 font-semibold mb-1">Image URL</label>
+                    <input type="url" id="newProdImg" required placeholder="https://images.unsplash.com/..." class="w-full bg-obsidian border border-champagne/20 rounded p-2.5 text-platinum">
+                </div>
+                <button type="submit" class="w-full py-3 bg-champagne text-obsidian font-bold text-xs uppercase tracking-wider rounded mt-2">
+                    Publish Timepiece
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast" class="fixed top-24 right-4 z-50 transform translate-x-full transition-transform duration-300 bg-slateDark border border-champagne/40 text-platinum px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 text-xs max-w-xs">
+        <i data-lucide="check-circle" class="w-5 h-5 text-champagne shrink-0"></i>
+        <span id="toastMsg">Action completed successfully.</span>
+    </div>
+
+    <script>
+        // Global Application State
+        let currentView = 'store'; // 'store' or 'admin'
+        let currentCurrency = 'PKR';
+        const usdRate = 278; // 1 USD = 278 PKR
+       
+        let products = [
+            {
+                id: 1,
+                name: "GenzAura Grand Tourbillon Rose Gold",
+                category: "Tourbillon",
+                pricePKR: 850000,
+                image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=800",
+                spec: "42mm • Tourbillon Automatic • Sapphire Glass",
+                waterResist: "50M Water Resistant",
+                stock: 2,
+                movement: "Calibre GA-9001 Flying Tourbillon",
+                description: "Hand-finished 18K Rose Gold plated case showcasing a exposed flying tourbillon at 6 o'clock."
+            },
+            {
+                id: 2,
+                name: "Obsidian Skeleton Mechanical",
+                category: "Automatic",
+                pricePKR: 420000,
+                image: "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&q=80&w=800",
+                spec: "44mm • Skeleton Automatic • Titanium Case",
+                waterResist: "100M Water Resistant",
+                stock: 5,
+                movement: "Calibre GA-Skeleton V2",
+                description: "Ultra-light weight forged titanium chassis with full open-worked skeleton dial."
+            },
+            {
+                id: 3,
+                name: "Monaco Racing Chronograph",
+                category: "Chronograph",
+                pricePKR: 380000,
+                image: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?auto=format&fit=crop&q=80&w=800",
+                spec: "41mm • Mechanical Chrono • Ceramic Bezel",
+                waterResist: "100M Water Resistant",
+                stock: 4,
+                movement: "Calibre GA-Chrono Column Wheel",
+                description: "Precision dual-register chronograph with tachymeter ceramic bezel."
+            },
+            {
+                id: 4,
+                name: "Deepsea Diver 300M Sapphire",
+                category: "Diver",
+                pricePKR: 295000,
+                image: "https://images.unsplash.com/photo-1539874754764-5a96559165b0?auto=format&fit=crop&q=80&w=800",
+                spec: "43mm • Automatic • Helium Escape Valve",
+                waterResist: "300M Professional Diver",
+                stock: 7,
+                movement: "Calibre GA-Diver Pro",
+                description: "Engineered for oceanic abysses with luminous Swiss Super-LumiNova markers."
+            },
+            {
+                id: 5,
+                name: "Atelier Slim Minimalist Dress",
+                category: "Dress",
+                pricePKR: 195000,
+                image: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&q=80&w=800",
+                spec: "39mm • Manual Wind • Alligator Leather",
+                waterResist: "30M Splash Resistant",
+                stock: 6,
+                movement: "Calibre GA-UltraSlim Manual",
+                description: "Only 6.8mm thickness, pure minimalist sunburst champagne dial with sapphire backing."
+            },
+            {
+                id: 6,
+                name: "Royal Perpetual Calendar Gold",
+                category: "Tourbillon",
+                pricePKR: 980000,
+                image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&q=80&w=800",
+                spec: "42mm • Automatic Perpetual • 18K Gold",
+                waterResist: "50M Water Resistant",
+                stock: 1,
+                movement: "Calibre GA-Master Perpetual",
+                description: "Complex horological complication tracking leap years, moonphase, and perpetual date."
+            }
+        ];
+
+        let cart = [];
+        let activeCategory = "All";
+
+        // Initialize Icons & UI on Load
+        window.addEventListener('DOMContentLoaded', () => {
+            renderProducts();
+            updateCartUI();
+            lucide.createIcons();
+        });
+
+        // VIEW TOGGLE (Storefront <-> Admin Studio)
+        function toggleView() {
+            currentView = currentView === 'store' ? 'admin' : 'store';
+            const storeEl = document.getElementById('storefrontView');
+            const adminEl = document.getElementById('adminStudioView');
+            const badgeEl = document.getElementById('viewModeBadge');
+            const mobileBtnText = document.getElementById('mobileViewBtnText');
+
+            if (currentView === 'admin') {
+                storeEl.classList.add('hidden');
+                adminEl.classList.remove('hidden');
+                badgeEl.innerText = 'Switch to Storefront';
+                mobileBtnText.innerText = 'Return to Storefront';
+                renderAdminTable();
+            } else {
+                adminEl.classList.add('hidden');
+                storeEl.classList.remove('hidden');
+                badgeEl.innerText = 'Switch to Admin Studio';
+                mobileBtnText.innerText = 'Open Admin Studio';
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function switchTab(tab) {
+            if (tab === 'store' && currentView !== 'store') {
+                toggleView();
+            }
+        }
+
+        // CURRENCY FORMATTER
+        function formatPrice(pkrAmount) {
+            if (currentCurrency === 'USD') {
+                const usd = Math.round(pkrAmount / usdRate);
+                return `$ ${usd.toLocaleString()}`;
+            }
+            return `Rs. ${pkrAmount.toLocaleString()}`;
+        }
+
+        function changeCurrency(val) {
+            currentCurrency = val;
+            document.getElementById('currencySelect').value = val;
+            document.getElementById('mobileCurrencySelect').value = val;
+            renderProducts();
+            updateCartUI();
+        }
+
+        // PRODUCT RENDERING
+        function renderProducts(items = products) {
+            const grid = document.getElementById('productsGrid');
+            const noResults = document.getElementById('noResults');
+
+            let filtered = items;
+            if (activeCategory !== 'All') {
+                filtered = items.filter(p => p.category === activeCategory);
+            }
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                noResults.classList.remove('hidden');
+                return;
+            } else {
+                noResults.classList.add('hidden');
+            }
+
+            grid.innerHTML = filtered.map(p => `
+                <div class="bg-slateDark/40 border border-champagne/20 rounded-2xl overflow-hidden hover:border-champagne/60 transition-all duration-300 flex flex-col justify-between group shadow-xl">
+                    <div>
+                        <!-- Image Container -->
+                        <div class="relative overflow-hidden h-64 bg-obsidian/60 flex items-center justify-center p-4">
+                            <img src="${p.image}" alt="${p.name}" class="object-cover h-full w-full rounded-xl transform group-hover:scale-105 transition-transform duration-500">
+                            <span class="absolute top-3 left-3 bg-obsidian/80 backdrop-blur-md border border-champagne/30 text-champagne text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
+                                ${p.category}
+                            </span>
+                            <button onclick="openQuickView(${p.id})" class="absolute bottom-3 right-3 p-2 bg-obsidian/80 border border-champagne/30 rounded-lg text-platinum hover:text-champagne hover:bg-slateDark transition min-w-[44px] min-h-[44px] flex items-center justify-center">
+                                <i data-lucide="eye" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+
+                        <!-- Content -->
+                        <div class="p-5 space-y-2">
+                            <p class="text-[10px] text-champagne/80 font-mono">${p.spec}</p>
+                            <h3 class="font-serif text-base font-bold text-white group-hover:text-champagne transition-colors leading-snug">${p.name}</h3>
+                            <p class="text-xs text-gray-400 line-clamp-2">${p.description}</p>
+                        </div>
+                    </div>
+
+                    <div class="p-5 pt-0 space-y-4">
+                        <div class="flex items-center justify-between border-t border-champagne/10 pt-3">
+                            <div>
+                                <p class="text-[10px] text-gray-400 uppercase">Vault Price</p>
+                                <p class="font-serif text-lg font-bold gold-gradient-text">${formatPrice(p.pricePKR)}</p>
+                            </div>
+                            <span class="text-[10px] text-emerald-400 font-semibold bg-emerald-500/10 px-2 py-1 rounded border border-emerald-500/20">
+                                ${p.stock > 0 ? `${p.stock} Available` : 'Reserved'}
+                            </span>
+                        </div>
+
+                        <button onclick="addToCart(${p.id})" class="w-full py-3 bg-gradient-to-r from-champagne/20 via-champagne/30 to-champagne/20 hover:from-champagne hover:to-yellow-500 text-champagne hover:text-obsidian border border-champagne/40 font-bold text-xs uppercase tracking-wider rounded-lg transition-all flex items-center justify-center gap-2 min-h-[44px]">
+                            <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                            <span>Reserve Timepiece</span>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            lucide.createIcons();
+        }
+
+        // CATEGORY FILTER
+        function filterCategory(cat) {
+            activeCategory = cat;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                if (btn.innerText.toLowerCase().includes(cat.toLowerCase()) || (cat === 'All' && btn.innerText.includes('All'))) {
+                    btn.classList.add('bg-champagne', 'text-obsidian', 'border-champagne');
+                    btn.classList.remove('bg-slateDark/50', 'text-platinum');
+                } else {
+                    btn.classList.remove('bg-champagne', 'text-obsidian', 'border-champagne');
+                    btn.classList.add('bg-slateDark/50', 'text-platinum');
+                }
+            });
+            renderProducts();
+        }
+
+        // SEARCH FUNCTION
+        function handleSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = products.filter(p => p.name.toLowerCase().includes(query) || p.category.toLowerCase().includes(query));
+            renderProducts(filtered);
+        }
+
+        function handleMobileSearch() {
+            const query = document.getElementById('mobileSearchInput').value.toLowerCase();
+            const filtered = products.filter(p => p.name.toLowerCase().includes(query) || p.category.toLowerCase().includes(query));
+            renderProducts(filtered);
+        }
+
+        // SORT FUNCTION
+        function sortProducts(val) {
+            let sorted = [...products];
+            if (val === 'price-low') sorted.sort((a, b) => a.pricePKR - b.pricePKR);
+            if (val === 'price-high') sorted.sort((a, b) => b.pricePKR - a.pricePKR);
+            if (val === 'name') sorted.sort((a, b) => a.name.localeCompare(b.name));
+            renderProducts(sorted);
+        }
+
+        function resetFilters() {
+            document.getElementById('searchInput').value = '';
+            filterCategory('All');
+        }
+
+        // MOBILE MENU DRAWER
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('-translate-x-full');
+        }
+
+        // CART DRAWER LOGIC
+        function toggleCartDrawer() {
+            const drawer = document.getElementById('cartDrawer');
+            drawer.classList.toggle('translate-x-full');
+        }
+
+        function addToCart(id) {
+            const prod = products.find(p => p.id === id);
+            const existing = cart.find(item => item.id === id);
+            if (existing) {
+                existing.qty++;
+            } else {
+                cart.push({ ...prod, qty: 1 });
+            }
+            updateCartUI();
+            showToast(`${prod.name} added to shopping vault.`);
+        }
+
+        function updateCartQty(id, delta) {
+            const item = cart.find(i => i.id === id);
+            if (item) {
+                item.qty += delta;
+                if (item.qty <= 0) {
+                    cart = cart.filter(i => i.id !== id);
+                }
+            }
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const list = document.getElementById('cartItemsList');
+            const totalCount = cart.reduce((acc, item) => acc + item.qty, 0);
+           
+            document.getElementById('cartBadge').innerText = totalCount;
+            document.getElementById('mobileBottomCartBadge').innerText = totalCount;
+
+            if (cart.length === 0) {
+                list.innerHTML = `
+                    <div class="text-center py-12 space-y-3">
+                        <i data-lucide="shopping-bag" class="w-12 h-12 text-champagne/30 mx-auto"></i>
+                        <p class="text-xs text-gray-400 font-serif">Your vault shopping bag is empty.</p>
+                    </div>
+                `;
+                document.getElementById('cartSubtotal').innerText = formatPrice(0);
+                document.getElementById('cartGrandTotal').innerText = formatPrice(0);
+                return;
+            }
+
+            const subtotal = cart.reduce((acc, item) => acc + (item.pricePKR * item.qty), 0);
+
+            list.innerHTML = cart.map(item => `
+                <div class="pt-4 flex items-center justify-between gap-3">
+                    <img src="${item.image}" class="w-14 h-14 object-cover rounded-lg border border-champagne/20">
+                    <div class="flex-1">
+                        <h4 class="font-serif text-xs font-bold text-white leading-tight">${item.name}</h4>
+                        <p class="text-[11px] gold-gradient-text font-bold mt-0.5">${formatPrice(item.pricePKR)}</p>
+                    </div>
+                    <div class="flex items-center border border-champagne/20 rounded bg-obsidian">
+                        <button onclick="updateCartQty(${item.id}, -1)" class="px-2 py-1 text-platinum hover:text-champagne">-</button>
+                        <span class="px-2 text-xs font-bold text-champagne">${item.qty}</span>
+                        <button onclick="updateCartQty(${item.id}, 1)" class="px-2 py-1 text-platinum hover:text-champagne">+</button>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('cartSubtotal').innerText = formatPrice(subtotal);
+            document.getElementById('cartGrandTotal').innerText = formatPrice(subtotal);
+
+            lucide.createIcons();
+        }
+
+        // QUICK VIEW MODAL
+        function openQuickView(id) {
+            const p = products.find(x => x.id === id);
+            const container = document.getElementById('quickViewContent');
+
+            container.innerHTML = `
+                <div class="rounded-xl overflow-hidden border border-champagne/20 bg-obsidian p-4 flex items-center justify-center">
+                    <img src="${p.image}" class="w-full h-72 object-cover rounded-lg">
+                </div>
+                <div class="space-y-4 text-xs">
+                    <div>
+                        <span class="text-[10px] text-champagne font-bold uppercase tracking-wider">${p.category}</span>
+                        <h2 class="font-serif text-xl font-bold text-white mt-1">${p.name}</h2>
+                        <p class="text-sm font-bold gold-gradient-text mt-1">${formatPrice(p.pricePKR)}</p>
+                    </div>
+                    <p class="text-gray-300 leading-relaxed">${p.description}</p>
+                    <div class="space-y-2 border-y border-champagne/10 py-3 text-[11px]">
+                        <p><strong>Movement Calibre:</strong> <span class="text-champagne">${p.movement}</span></p>
+                        <p><strong>Case Specification:</strong> <span class="text-gray-300">${p.spec}</span></p>
+                        <p><strong>Water Resistance:</strong> <span class="text-gray-300">${p.waterResist}</span></p>
+                    </div>
+                    <button onclick="addToCart(${p.id}); closeQuickView()" class="w-full py-3.5 bg-champagne text-obsidian font-bold uppercase text-xs rounded-lg hover:bg-champagneLight min-h-[44px]">
+                        Add to Vault Bag
+                    </button>
+                </div>
+            `;
+
+            document.getElementById('quickViewModal').classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        function closeQuickView() {
+            document.getElementById('quickViewModal').classList.add('hidden');
+        }
+
+        // CHECKOUT & WHATSAPP
+        function openCheckoutModal() {
+            if (cart.length === 0) {
+                showToast("Please add timepieces to cart first.");
+                return;
+            }
+            toggleCartDrawer();
+            document.getElementById('checkoutModal').classList.remove('hidden');
+        }
+
+        function closeCheckoutModal() {
+            document.getElementById('checkoutModal').classList.add('hidden');
+        }
+
+        function handleCheckoutSubmit(e) {
+            e.preventDefault();
+            closeCheckoutModal();
+           
+            // Populate printable certificate
+            const subtotal = cart.reduce((acc, item) => acc + (item.pricePKR * item.qty), 0);
+            document.getElementById('certOrderId').innerText = `#GZA-${Math.floor(1000 + Math.random() * 9000)}`;
+            document.getElementById('certClientName').innerText = "Valued Vault Client";
+            document.getElementById('certItemName').innerText = cart.map(i => `${i.name} (x${i.qty})`).join(', ');
+            document.getElementById('certTotalAmount').innerText = formatPrice(subtotal);
+
+            cart = [];
+            updateCartUI();
+           
+            document.getElementById('certificateModal').classList.remove('hidden');
+        }
+
+        function closeCertificateModal() {
+            document.getElementById('certificateModal').classList.add('hidden');
+        }
+
+        function sendWhatsAppOrder() {
+            if (cart.length === 0) {
+                showToast("Add timepieces to order via WhatsApp.");
+                return;
+            }
+            const itemsText = cart.map(i => `• ${i.name} (Qty: ${i.qty}) - Rs. ${i.pricePKR * i.qty}`).join('%0A');
+            const total = cart.reduce((acc, item) => acc + (item.pricePKR * item.qty), 0);
+            const msg = `Hello GenzAura Concierge,%0A%0AI would like to reserve the following timepieces:%0A${itemsText}%0A%0AGrand Total: Rs. ${total.toLocaleString()}%0APlease confirm availability.`;
+            window.open(`https://wa.me/923001234567?text=${msg}`, '_blank');
+        }
+
+        // ADMIN STUDIO LOGIC
+        function switchAdminTab(tab) {
+            document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+                btn.classList.remove('bg-champagne', 'text-obsidian');
+                btn.classList.add('bg-slateDark/50', 'text-gray-300');
+            });
+
+            document.getElementById('adminTabInventory').classList.add('hidden');
+            document.getElementById('adminTabOrders').classList.add('hidden');
+            document.getElementById('adminTabAnnouncement').classList.add('hidden');
+
+            if (tab === 'inventory') {
+                document.getElementById('tabBtnInventory').classList.add('bg-champagne', 'text-obsidian');
+                document.getElementById('adminTabInventory').classList.remove('hidden');
+            } else if (tab === 'orders') {
+                document.getElementById('tabBtnOrders').classList.add('bg-champagne', 'text-obsidian');
+                document.getElementById('adminTabOrders').classList.remove('hidden');
+            } else if (tab === 'announcement') {
+                document.getElementById('tabBtnAnnouncement').classList.add('bg-champagne', 'text-obsidian');
+                document.getElementById('adminTabAnnouncement').classList.remove('hidden');
+            }
+        }
+
+        function renderAdminTable() {
+            const tbody = document.getElementById('adminProductTable');
+            tbody.innerHTML = products.map(p => `
+                <tr>
+                    <td class="p-3.5 flex items-center gap-3">
+                        <img src="${p.image}" class="w-10 h-10 object-cover rounded border border-champagne/20">
+                        <span class="font-bold text-white">${p.name}</span>
+                    </td>
+                    <td class="p-3.5 text-champagne">${p.category}</td>
+                    <td class="p-3.5 font-bold">Rs. ${p.pricePKR.toLocaleString()}</td>
+                    <td class="p-3.5">${p.stock} units</td>
+                    <td class="p-3.5">
+                        <button onclick="deleteProduct(${p.id})" class="p-1.5 border border-red-500/40 text-red-400 hover:bg-red-500/20 rounded min-w-[36px] min-h-[36px] flex items-center justify-center">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+
+            document.getElementById('adminInventoryCount').innerText = `${products.length} Models`;
+            lucide.createIcons();
+        }
+
+        function deleteProduct(id) {
+            products = products.filter(p => p.id !== id);
+            renderAdminTable();
+            renderProducts();
+            showToast("Timepiece removed from inventory.");
+        }
+
+        function openAddProductModal() {
+            document.getElementById('addProductModal').classList.remove('hidden');
+        }
+
+        function closeAddProductModal() {
+            document.getElementById('addProductModal').classList.add('hidden');
+        }
+
+        function handleAddProductSubmit(e) {
+            e.preventDefault();
+            const newProd = {
+                id: Date.now(),
+                name: document.getElementById('newProdName').value,
+                category: document.getElementById('newProdCategory').value,
+                pricePKR: parseInt(document.getElementById('newProdPrice').value),
+                stock: parseInt(document.getElementById('newProdStock').value),
+                image: document.getElementById('newProdImg').value,
+                spec: "42mm • Custom Movement • Sapphire Glass",
+                waterResist: "50M Water Resistant",
+                movement: "Calibre GA-Custom Series",
+                description: "Newly registered luxury masterpiece added via GenzAura Studio."
+            };
+
+            products.unshift(newProd);
+            closeAddProductModal();
+            renderAdminTable();
+            renderProducts();
+            showToast("New Timepiece published live to Storefront!");
+        }
+
+        function updateAnnouncementTicker() {
+            const val = document.getElementById('adminTickerInput').value;
+            document.getElementById('announcementText').innerText = val;
+            showToast("Header announcement ticker updated!");
+        }
+
+        // TOAST SYSTEM
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = msg;
+            toast.classList.remove('translate-x-full');
+            setTimeout(() => {
+                toast.classList.add('translate-x-full');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
